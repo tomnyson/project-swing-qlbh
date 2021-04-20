@@ -29,12 +29,13 @@ public class ProductDAO {
 
     public boolean create(SanPhamDTO sp) {
         try {
-            String sql = "insert into products (name, description, price, status) values (?,?,?,?)";
+            String sql = "insert into products (name, description, price, status, category) values (?,?,?,?,?)";
             PreparedStatement prst = cnn.prepareStatement(sql);
             prst.setString(1, sp.getName());
             prst.setString(2, sp.getDescription());
             prst.setFloat(3, sp.getPrice());
             prst.setInt(4, sp.getStatus());
+            prst.setInt(5, sp.getCategory().getId());
             int result = prst.executeUpdate();
             if (result > 0) {
                 return true;
@@ -46,14 +47,15 @@ public class ProductDAO {
         return false;
     }
 
-    public boolean update(CategoryDTO cat) {
+    public boolean update(SanPhamDTO sp) {
         try {
-            String sql = "update categorys set code = ?, name = ?, description = ? where id = ?";
+            String sql = "update products set name = ?, description = ?, price = ?, category = ? where id = ?";
             PreparedStatement prst = cnn.prepareStatement(sql);
-            prst.setString(1, cat.getCode());
-            prst.setString(2, cat.getName());
-            prst.setString(3, cat.getDescription());
-            prst.setInt(4, cat.getId());
+            prst.setString(1, sp.getName());
+            prst.setString(2, sp.getDescription());
+            prst.setFloat(3, sp.getPrice());
+            prst.setInt(4, sp.getCategory().getId());
+             prst.setInt(5, sp.getId());
             int result = prst.executeUpdate();
             if (result > 0) {
                 return true;
@@ -67,7 +69,7 @@ public class ProductDAO {
 
     public boolean delete(int id) {
         try {
-            String sql = "delete from categorys where id= ?";
+            String sql = "delete from products where id= ?";
             PreparedStatement prst = cnn.prepareStatement(sql);
             prst.setInt(1, id);
             int result = prst.executeUpdate();
@@ -84,7 +86,7 @@ public class ProductDAO {
     public List getAll() {
         List<SanPhamDTO> catList = new ArrayList<>();
         try {
-            String sql = "select * from products";
+            String sql = "select p.*, p.id as catId, cat.name as catName  from products p inner join categorys cat on p.category = cat.id";
             PreparedStatement prst = cnn.prepareStatement(sql);
             ResultSet result = prst.executeQuery();
             while (result.next()) {
@@ -94,6 +96,8 @@ public class ProductDAO {
                 prodDTO.setDescription(result.getString("description"));
                 prodDTO.setPrice(result.getFloat("price"));
                 prodDTO.setStatus(result.getInt("status"));
+                CategoryDTO cat = new CategoryDTO(result.getInt("catId"), result.getString("catName"));
+                prodDTO.setCategory(cat);
                 catList.add(prodDTO);
             }
         } catch (Exception e) {
@@ -101,7 +105,26 @@ public class ProductDAO {
         return catList;
     }
 
-    public boolean getDetailById() {
-        return true;
+    public  SanPhamDTO getDetailById(int id) {
+       SanPhamDTO prod;
+        try {
+            String sql = "select p.*, p.id as catId, cat.name as catName  from products p inner join categorys cat on p.category = cat.id where p.id = ?";
+            PreparedStatement prst = cnn.prepareStatement(sql);
+            prst.setInt(1, id);
+            ResultSet result = prst.executeQuery();
+            while (result.next()) {
+                prod = new SanPhamDTO();
+                prod.setId(result.getInt("id"));
+                prod.setName(result.getString("name"));
+                prod.setDescription(result.getString("description"));
+                prod.setPrice(result.getFloat("price"));
+                prod.setStatus(result.getInt("status"));
+                CategoryDTO cat = new CategoryDTO(result.getInt("catId"), result.getString("catName"));
+                prod.setCategory(cat);
+                return prod;
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
