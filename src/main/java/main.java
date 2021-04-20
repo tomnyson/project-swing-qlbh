@@ -1,4 +1,6 @@
 
+import java.util.Timer;
+import untils.TimerThread;
 import views.loginfrm;
 
 /*
@@ -13,7 +15,12 @@ import views.loginfrm;
  */
 public class main {
     public static void main(String[] args) {
+        TimerThread t1 = new TimerThread("task here");
+        Timer t = new Timer();
+         t.schedule(t1, 1000, 2000);
         loginfrm frm = new loginfrm();
         frm.setVisible(true);
+       
+        
     }
 }

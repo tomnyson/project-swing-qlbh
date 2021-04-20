@@ -18,12 +18,14 @@ package dto;
  *
  * @author tomnyson
  */
+
 public class CategoryDTO {
     private int id;
     private String code;
     private String name;
     private String description;
     private int status;
+    
     public CategoryDTO() {
     }
     public CategoryDTO(String code, String name, String description, int status) {
@@ -33,6 +35,11 @@ public class CategoryDTO {
         this.status = status;
     }
 
+    public CategoryDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
     public CategoryDTO(int id, String code, String name, String description, int status) {
         this.id = id;
         this.code = code;
@@ -40,6 +47,7 @@ public class CategoryDTO {
         this.description = description;
         this.status = status;
     }
+
     
     public int getId() {
         return id;
