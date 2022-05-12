@@ -12,17 +12,17 @@ import java.sql.*;
  * @author tomnyson
  */
 public class DBProvider {
-    private static String USER_NAME = "sa";
-    private static String PASSWORD = "Admin123@";
+    private static String USER_NAME = "dev";
+    private static String PASSWORD = "dev";
     private static String DATABASE = "qlbh";
-    private static String DB_URL = "jdbc:sqlserver://localhost;databaseName=qlbh;user=sa;password=Admin123@";
+    private static String DB_URL = "jdbc:mysql://192.168.64.2:3306/qlbh";
     
     
    public static Connection getSqlConnection() {
        Connection conn = null;
        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(DB_URL);
+             Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
             System.out.println("connect successfully!");
        } catch (Exception e) {
            System.out.println("connect failure!");

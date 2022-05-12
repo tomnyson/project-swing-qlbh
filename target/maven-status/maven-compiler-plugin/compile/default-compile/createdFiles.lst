@@ -1,9 +1,12 @@
 views/mainfrm$13.class
 dto/UserDTO.class
 views/mainfrm$7.class
+views/JPDemo.class
+views/frmDemo$2.class
 untils/TimerThread.class
 views/loginfrm$1.class
 dto/CategoryDTO.class
+views/frmDemo.class
 views/mainfrm$10.class
 views/mainfrm$4.class
 views/mainfrm.class
@@ -21,6 +24,7 @@ dao/ProductDAO.class
 views/mainfrm$14.class
 views/mainfrm$8.class
 views/mainfrm$12.class
+views/frmDemo$1.class
 views/mainfrm$3.class
 views/loginfrm$2.class
 dao/UserDAO.class

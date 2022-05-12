@@ -28,7 +28,7 @@ public class CategoryDAO {
 
     public boolean create(CategoryDTO cat) {
         try {
-            String sql = "insert into categorys (code, name, description, status) values (?,?,?,?)";
+            String sql = "insert into categories (code, name, description, status) values (?,?,?,?)";
             PreparedStatement prst = cnn.prepareStatement(sql);
             prst.setString(1, cat.getCode());
             prst.setString(2, cat.getName());
@@ -47,7 +47,7 @@ public class CategoryDAO {
 
     public boolean update(CategoryDTO cat) {
         try {
-            String sql = "update categorys set code = ?, name = ?, description = ? where id = ?";
+            String sql = "update categories set code = ?, name = ?, description = ? where id = ?";
             PreparedStatement prst = cnn.prepareStatement(sql);
             prst.setString(1, cat.getCode());
             prst.setString(2, cat.getName());
@@ -66,7 +66,7 @@ public class CategoryDAO {
 
     public boolean delete(int id) {
         try {
-            String sql = "delete from categorys where id= ?";
+            String sql = "delete from categories where id= ?";
             PreparedStatement prst = cnn.prepareStatement(sql);
             prst.setInt(1, id);
             int result = prst.executeUpdate();
@@ -83,7 +83,7 @@ public class CategoryDAO {
     public List getAll() {
         List<CategoryDTO> catList = new ArrayList<>();
         try {
-            String sql = "select * from categorys";
+            String sql = "select * from categories";
             PreparedStatement prst = cnn.prepareStatement(sql);
             ResultSet result = prst.executeQuery();
             while (result.next()) {
